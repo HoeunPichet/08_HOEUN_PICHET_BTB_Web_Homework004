@@ -1,10 +1,9 @@
-import React from "react";
 import { Star } from "lucide-react";
 import FilterComponent from "./FilterComponent";
 
 export default function LearningMaterialsComponent() {
   return (
-    <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto h-[80vh]">
+    <div className="bg-white grow drop-shadow-lg rounded-2xl overflow-auto h-[80vh]">
       {/* calling filter component */}
       <FilterComponent />
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { sidebarList } from "../data/sidebarList";
 import { LogOutIcon } from "lucide-react";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function FilterComponent() {
   // prevent the page from reload
   const handleSubmit = (e) => {
