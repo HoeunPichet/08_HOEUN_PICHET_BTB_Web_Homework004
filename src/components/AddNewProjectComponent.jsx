@@ -11,7 +11,9 @@ import {
 export default function AddNewProjectComponent({ item }) {
   const formProject = useRef(null);
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
+
     const form = formProject.current;
     const projectName = form.querySelector("[name=projectName]");
     const dueDate = form.querySelector("[name=dueDate]");
@@ -93,7 +95,11 @@ export default function AddNewProjectComponent({ item }) {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <form ref={formProject} className="p-4 md:p-5">
+            <form
+              ref={formProject}
+              onSubmit={submitForm}
+              className="p-4 md:p-5"
+            >
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label
@@ -166,8 +172,7 @@ export default function AddNewProjectComponent({ item }) {
               </div>
               <div className="text-right">
                 <button
-                  onClick={submitForm}
-                  type="button"
+                  type="submit"
                   className="text-white inline-flex items-center bg-custom-sky-blue hover:bg-custom-sky-blue-500 focus:ring-4 focus:outline-none focus:ring-custom-sky-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-custom-sky-blue-500 dark:hover:bg-custom-sky-blue-500 dark:focus:ring-custom-sky-blue-500"
                 >
                   Create

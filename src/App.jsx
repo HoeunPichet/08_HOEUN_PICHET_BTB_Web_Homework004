@@ -10,12 +10,16 @@ import { useState } from "react";
 
 function App() {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState("");
 
   const getData = (item) => {
     const newSet = [...data, item];
-    console.log(newSet);
 
     setData(newSet);
+  };
+
+  const searchData = (value) => {
+    setFilters(value.toLowerCase());
   };
 
   return (
@@ -23,7 +27,7 @@ function App() {
       <main className="flex w-full">
         <SidebarComponent />
         <section className="grow flex flex-col gap-5 px-8 py-7">
-          <TopNavbarComponent />
+          <TopNavbarComponent values={searchData} />
           <article className="w-full flex gap-8">
             <section className="w-9/12 flex flex-col">
               <DashboardComponent />
@@ -35,14 +39,22 @@ function App() {
                 {data &&
                   data.map((item, key) => {
                     return (
-                      <CardComponent
+                      <div
                         key={key}
-                        name={item.name}
-                        dueDate={item.dueDate}
-                        progress={item.progress}
-                        description={item.description}
-                        remain={item.remain}
-                      />
+                        className={
+                          item.name.toLowerCase().includes(filters)
+                            ? ""
+                            : "hidden"
+                        }
+                      >
+                        <CardComponent
+                          name={item.name}
+                          dueDate={item.dueDate}
+                          progress={item.progress}
+                          description={item.description}
+                          remain={item.remain}
+                        />
+                      </div>
                     );
                   })}
               </div>
