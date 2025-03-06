@@ -6,8 +6,18 @@ import AssignmentsComponent from "./components/AssignmentsComponent";
 import AddNewProjectComponent from "./components/AddNewProjectComponent";
 import LearningMaterialsComponent from "./components/LearningMaterialsComponent";
 import CardComponent from "./components/CardComponent";
+import { useState } from "react";
 
 function App() {
+  const [data, setData] = useState([]);
+
+  const getData = (item) => {
+    const newSet = [...data, item];
+    console.log(newSet);
+
+    setData(newSet);
+  };
+
   return (
     <>
       <main className="flex w-full">
@@ -19,10 +29,22 @@ function App() {
               <DashboardComponent />
               <div className="w-full flex justify-between gap-5 mt-10">
                 <AssignmentsComponent />
-                <AddNewProjectComponent />
+                <AddNewProjectComponent item={getData} />
               </div>
-              <div className="">
-                <CardComponent />
+              <div className="w-full grid grid-cols-3 gap-5 mt-5 max-h-[calc(100vh_-_24rem)] overflow-auto">
+                {data &&
+                  data.map((item, key) => {
+                    return (
+                      <CardComponent
+                        key={key}
+                        name={item.name}
+                        dueDate={item.dueDate}
+                        progress={item.progress}
+                        description={item.description}
+                        remain={item.remain}
+                      />
+                    );
+                  })}
               </div>
             </section>
             <LearningMaterialsComponent />

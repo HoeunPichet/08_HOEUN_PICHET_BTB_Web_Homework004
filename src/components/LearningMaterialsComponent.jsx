@@ -2,21 +2,10 @@ import { Star } from "lucide-react";
 import FilterComponent from "./FilterComponent";
 import { learningMaterials } from "./../data/learningMaterials";
 import { useState } from "react";
+import { formatDate } from "../helper/helper";
 
 export default function LearningMaterialsComponent() {
   const [getMaterial, setMaterial] = useState(learningMaterials);
-
-  const formatDate = (dt) => {
-    const date = new Date(dt);
-    const options = {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-    const formattedDate = date.toLocaleDateString("en-US", options);
-    return formattedDate;
-  };
 
   const updateFavorite = (id) => {
     const existData = [];
@@ -72,12 +61,12 @@ export default function LearningMaterialsComponent() {
                 <div className="flex justify-between">
                   <p className="text-base font-medium">{item.title}</p>
                   <Star
-                    onClick={() => {
-                      updateFavorite(item.id);
-                    }}
+                    onClick={() => updateFavorite(item.id)}
                     className={
                       "cursor-pointer " +
-                      (item.isFavorite ? "fill-amber-400 stroke-amber-400" : "")
+                      (item.isFavorite
+                        ? "fill-amber-400 stroke-amber-400"
+                        : "stroke-slate-400")
                     }
                     size={20}
                   />
