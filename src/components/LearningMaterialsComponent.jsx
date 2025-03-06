@@ -1,11 +1,50 @@
 import { Star } from "lucide-react";
 import FilterComponent from "./FilterComponent";
+import { learningMaterials } from "./../data/learningMaterials";
+import { useState } from "react";
 
 export default function LearningMaterialsComponent() {
+  const [getMaterial, setMaterial] = useState(learningMaterials);
+
+  const formatDate = (dt) => {
+    const date = new Date(dt);
+    const options = {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
+
+  const updateFavorite = (id) => {
+    const existData = [];
+    for (const item of getMaterial) {
+      item.id == id && (item.isFavorite = item.isFavorite ? false : true);
+      existData.push(item);
+    }
+    setMaterial(existData);
+  };
+
+  const sortData = (value) => {
+    let sortedMaterial;
+    if (value == "A-Z") {
+      sortedMaterial = [...getMaterial].sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+    } else {
+      sortedMaterial = [...getMaterial].sort((a, b) =>
+        b.title.localeCompare(a.title)
+      );
+    }
+    setMaterial(sortedMaterial);
+  };
+
   return (
     <div className="bg-white grow drop-shadow-lg rounded-2xl overflow-auto h-[80vh]">
       {/* calling filter component */}
-      <FilterComponent />
+      <FilterComponent values={sortData} />
 
       {/* title */}
       <div className="p-4 flex justify-between items-center">
@@ -15,23 +54,41 @@ export default function LearningMaterialsComponent() {
 
       {/* materials list */}
       <div className="space-y-3">
-        <div className="bg-light-gray px-4 py-2 flex gap-5 items-center">
-          <img
-            src="https://i.pinimg.com/736x/ca/e1/b4/cae1b4f6b223fe5a7bb712b680cffa67.jpg"
-            alt="HTML5"
-            width={50}
-            height={50}
-            className="rounded-xl"
-          />
+        {getMaterial.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className="bg-light-gray px-4 py-2 flex gap-5 items-center"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                width={50}
+                height={50}
+                className="rounded-xl"
+              />
 
-          <div className="w-full">
-            <div className="flex justify-between">
-              <p className="text-base font-medium">HTML5</p>
-              <Star size={20} />
+              <div className="w-full">
+                <div className="flex justify-between">
+                  <p className="text-base font-medium">{item.title}</p>
+                  <Star
+                    onClick={() => {
+                      updateFavorite(item.id);
+                    }}
+                    className={
+                      "cursor-pointer " +
+                      (item.isFavorite ? "fill-amber-400 stroke-amber-400" : "")
+                    }
+                    size={20}
+                  />
+                </div>
+                <p className="text-gray-400 text-sm">
+                  Posted at: {formatDate(item.postedAt)}
+                </p>
+              </div>
             </div>
-            <p className="text-gray-400 text-sm">Posted at: 2025/01/13</p>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

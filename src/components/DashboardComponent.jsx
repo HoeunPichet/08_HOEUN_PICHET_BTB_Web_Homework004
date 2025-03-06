@@ -11,7 +11,7 @@ export default function DashboardComponent() {
           return (
             <div
               key={item.id}
-              className="flex bg-white drop-shadow-xl gap-5 py-3.5 px-4 rounded-xl w-auto"
+              className="flex bg-white gap-5 py-3.5 px-4 rounded-xl w-auto"
             >
               <div className={"p-3 rounded-xl " + item.color}>
                 <img src={item.icon} alt="file icon" />

@@ -1,13 +1,16 @@
-export default function FilterComponent() {
+// eslint-disable-next-line react/prop-types
+export default function FilterComponent({ values }) {
   // prevent the page from reload
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-  };
+    values(e.target.value);
+  }
 
   return (
-    <form className="mt-4 mx-4 flex justify-between" onSubmit={handleSubmit}>
-      <div className="relative w-full ">
+    <form className="mt-4 mx-4 flex justify-between">
+      <div className="relative w-full">
         <select
+          onChange={handleSubmit}
           id="filterLearningMaterials"
           name="filterLearningMaterials"
           className="text-sm focus:ring-custom-sky-blue focus:border-custom-sky-blue block w-full p-4 focus:outline-none text-gray-400 border-none rounded-xl bg-light-gray"
